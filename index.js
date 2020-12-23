@@ -1,9 +1,13 @@
 function createStore() {
   let state;
+  let listeners = [];
 
   const getState = () => state;
+  const subscribe = (listener) => {
+    listeners.push(listener);
+  };
 
-  return { getState };
+  return { getState, subscribe };
 }
 
 const store = createStore();
@@ -13,5 +17,5 @@ store.subscribe(() => {
 });
 
 store.subscribe(() => {
-  console.log("The strore changed");
+  console.log("The store changed");
 });
