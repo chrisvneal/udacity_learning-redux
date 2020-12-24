@@ -25,8 +25,11 @@ function createStore(reducer) {
 function todos(state = [], action) {
   if (action.type === "ADD_TODO") {
     return state.concat([action.todo]);
-  }
-  return state;
+  }  else if (action.type="REMOVE_TODO") {
+
+  
+} else if (action.type="TOGGLE_TODO") {
+
 }
 
 const store = createStore(todos);
