@@ -25,16 +25,17 @@ function createStore(reducer) {
 function todos(state = [], action) {
   if (action.type === "ADD_TODO") {
     return state.concat([action.todo]);
+  } else if ((action.type = "REMOVE_TODO")) {
+  } else if ((action.type = "TOGGLE_TODO")) {
   }
-  return state;
+
+  const store = createStore(todos);
+
+  store.subscribe(() => {
+    console.log("The new state is: " + store.getState());
+  });
+
+  const unsubscribe = store.subscribe(() => {
+    console.log("The store changed");
+  });
 }
-
-const store = createStore(todos);
-
-store.subscribe(() => {
-  console.log("The new state is: " + store.getState());
-});
-
-const unsubscribe = store.subscribe(() => {
-  console.log("The store changed");
-});
