@@ -50,3 +50,13 @@ store.dispatch({
     complete: false,
   },
 });
+
+// example dispatch() call
+store.dispatch({
+  type: "ADD_TODO",
+  todo: {
+    id: 1,
+    name: "Learn Redux",
+    complete: false,
+  },
+});
