@@ -39,3 +39,12 @@ function todos(state = [], action) {
     console.log("The store changed");
   });
 }
+
+store.dispatch({
+  type: "ADD_TODO",
+  todo: {
+    id: 0,
+    name: "Learn Redux",
+    complete: false,
+  },
+});
