@@ -43,6 +43,17 @@ function todos(state = [], action) {
           : Object.assign({}, todo, { complete: !todo.complete })
       );
 
+      function goals(state = [], action) {
+        switch (action.type) {
+          case "ADD_GOAL":
+            return state.concat([action.goal]);
+          case "REMOVE_GOAL":
+            return state.filter((goal) => goal.id !== action.id);
+          default:
+            return state;
+        }
+      }
+
     default:
       return state;
   }
@@ -54,6 +65,7 @@ store.subscribe(() => {
   console.log("The new state is: " + store.getState());
 });
 
+// example dispatch() call
 store.dispatch({
   type: "ADD_TODO",
   todo: {
@@ -63,7 +75,6 @@ store.dispatch({
   },
 });
 
-// example dispatch() call
 store.dispatch({
   type: "ADD_TODO",
   todo: {
