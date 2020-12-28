@@ -79,9 +79,10 @@ function createStore(reducer) {
 
   // update state with  dispatch function
   const dispatch = (action) => {
-    state = reducer((state = []), action);
+    state = reducer((state, action))
     listeners.forEach((listener) => listener());
   };
+
 
   // return all user variables
   return { getState, subscribe, dispatch };
