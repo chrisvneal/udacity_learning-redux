@@ -1,3 +1,9 @@
+const ADD_GOAL = "ADD_GOAL";
+const REMOVE_GOAL = "REMOVE_GOAL";
+const ADD_TODO = "ADD_TODO";
+const REMOVE_TODO = "REMOVE_TODO";
+const TOGGLE_TODO = "TOGGLE_TODO";
+
 // Library Code
 function createStore(reducer) {
   // create state variable
@@ -30,13 +36,13 @@ function createStore(reducer) {
 
 function todos(state = [], action) {
   switch (action.type) {
-    case "ADD_TODO":
+    case ADD_TODO:
       return state.concat([action.todo]);
 
-    case "REMOVE_TODO":
+    case REMOVE_TODO:
       return state.filter((todo) => todo.id !== action.id);
 
-    case "TOGGLE_TODO":
+    case TOGGLE_TODO:
       return state.map((todo) =>
         todo.id !== action.id
           ? todo
@@ -60,10 +66,10 @@ function todos(state = [], action) {
 
 function goals(state = [], action) {
   switch (action.type) {
-    case "ADD_GOAL":
+    case ADD_GOAL:
       return state.concat([action.goal]);
 
-    case "REMOVE_GOAL":
+    case REMOVE_GOAL:
       return state.filter((goal) => goal.id !== action.id);
 
     default:
@@ -88,35 +94,35 @@ store.subscribe(() => {
 
 function addTodoAction(todo) {
   return {
-    type: "ADD_TODO",
+    type: ADD_TODO,
     todo,
   };
 }
 
 function removeTodoAction(id) {
   return {
-    type: "REMOVE_TODO",
+    type: REMOVE_TODO,
     id,
   };
 }
 
 function toggleTodoAction(id) {
   return {
-    type: "TOGGLE_TODO",
+    type: TOGGLE_TODO,
     id,
   };
 }
 
 function addGoalAction(goal) {
   return {
-    type: "ADD_GOAL",
+    type: ADD_GOAL,
     goal,
   };
 }
 
 function removeGoalAction(id) {
   return {
-    type: "REMOVE_GOAL",
+    type: REMOVE_GOAL,
     id,
   };
 }
