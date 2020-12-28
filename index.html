@@ -73,7 +73,7 @@ function createStore(reducer) {
     listeners.push(listener);
 
     return () => {
-      listeners.filter((l) => l !== listener);
+      listeners = listeners.filter((l) => l !== listener);
     };
   };
 
