@@ -1,233 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Udacity Todos Goals</title>
-</head>
-<body>
+  </head>
+  <body>
+    <form action="">
+      <div>
+        <h1>Todo List</h1>
+        <input type="text" placeholder="Add Todo" id="todo" />
+        <button id="todoBtn">Add Task</button>
+        <ul id="todos"></ul>
+      </div>
 
- 
+      <div>
+        <h1>Add Goal</h1>
+        <input type="text" placeholder="Add Goal" id="goal" />
+        <button id="goalBtn">Add Goal</button>
+        <ul id="goals"></ul>
+      </div>
+    </form>
 
+    <script type="text/javascript">
+      // Library Code
+      function createStore(reducer) {
+        // create state variable
+        let state;
+        let listeners = [];
 
+        // access the current state
+        const getState = () => state;
 
+        // subscribe to state updates
+        const subscribe = (listener) => {
+          listeners.push(listener);
 
-<form action="">
-  <div>
-    <h1>Todo List</h1>
-    <input type="text" placeholder="Add Todo" id="todo">
-    <button id='todoBtn'>Add Task</button>
-    <ul id="todos"></ul>
-  </div>
+          return () => {
+            listeners = listeners.filter((l) => l !== listener);
+          };
+        };
 
-  <div>
-    <h1>Add Goal</h1>
-    <input type="text" placeholder="Add Goal" id='goal'>
-    <button id='goalBtn'>Add Goal</button>
-    <ul id="goals"></ul>
-  </div>
+        // update state with  dispatch function
+        const dispatch = (action) => {
+          state = reducer(state, action);
+          listeners.forEach((listener) => listener());
+        };
 
-</form>
+        // return all user variables
+        return { getState, subscribe, dispatch };
+      }
 
+      // App Code
+      const ADD_TODO = "ADD_TODO";
+      const REMOVE_TODO = "REMOVE_TODO";
+      const TOGGLE_TODO = "TOGGLE_TODO";
+      const ADD_GOAL = "ADD_GOAL";
+      const REMOVE_GOAL = "REMOVE_GOAL";
 
+      function addTodoAction(todo) {
+        return {
+          type: ADD_TODO,
+          todo,
+        };
+      }
 
+      function removeTodoAction(id) {
+        return {
+          type: REMOVE_TODO,
+          id,
+        };
+      }
 
+      function toggleTodoAction(id) {
+        return {
+          type: TOGGLE_TODO,
+          id,
+        };
+      }
 
+      function addGoalAction(goal) {
+        return {
+          type: ADD_GOAL,
+          goal,
+        };
+      }
 
+      function removeGoalAction(id) {
+        return {
+          type: REMOVE_GOAL,
+          id,
+        };
+      }
 
+      function todos(state = [], action) {
+        switch (action.type) {
+          case ADD_TODO:
+            return state.concat([action.todo]);
 
+          case REMOVE_TODO:
+            return state.filter((todo) => todo.id !== action.id);
 
+          case TOGGLE_TODO:
+            return state.map((todo) =>
+              todo.id !== action.id
+                ? todo
+                : Object.assign({}, todo, { complete: !todo.complete })
+            );
 
+          default:
+            return state;
+        }
+      }
 
+      function goals(state = [], action) {
+        switch (action.type) {
+          case ADD_GOAL:
+            return state.concat([action.goal]);
 
+          case REMOVE_GOAL:
+            return state.filter((goal) => goal.id !== action.id);
 
+          default:
+            return state;
+        }
+      }
 
+      function app(state = {}, action) {
+        return {
+          todos: todos(state.todos, action),
+          goals: goals(state.todos, action),
+        };
+      }
 
+      const store = createStore(app);
 
+      store.subscribe(() => {
+        console.log("The new state is: ", store.getState());
+      });
 
+      // example dispatch() calls
 
-
-
-
-
-
-
-    <script type='text/javascript'>
-    const ADD_GOAL = "ADD_GOAL";
-const REMOVE_GOAL = "REMOVE_GOAL";
-const ADD_TODO = "ADD_TODO";
-const REMOVE_TODO = "REMOVE_TODO";
-const TOGGLE_TODO = "TOGGLE_TODO";
-
-// Library Code
-function createStore(reducer) {
-  // create state variable
-  let state;
-  let listeners = [];
-
-  // access the current state
-  const getState = () => state;
-
-  // subscribe to state updates
-  const subscribe = (listener) => {
-    listeners.push(listener);
-
-    return () => {
-      listeners = listeners.filter((l) => l !== listener);
-    };
-  };
-
-  // update state with  dispatch function
-  const dispatch = (action) => {
-    state = reducer((state, action))
-    listeners.forEach((listener) => listener());
-  };
-
-
-  // return all user variables
-  return { getState, subscribe, dispatch };
-}
-
-// App Code
-
-function todos(state = [], action) {
-  switch (action.type) {
-    case ADD_TODO:
-      return state.concat([action.todo]);
-
-    case REMOVE_TODO:
-      return state.filter((todo) => todo.id !== action.id);
-
-    case TOGGLE_TODO:
-      return state.map((todo) =>
-        todo.id !== action.id
-          ? todo
-          : Object.assign({}, todo, { complete: !todo.complete })
+      store.dispatch(
+        addTodoAction({
+          id: 0,
+          name: "Learn Redux",
+          complete: false,
+        })
       );
 
-    default:
-      return state;
-  }
+      store.dispatch(
+        addTodoAction({
+          id: 1,
+          name: "Dinner w/ Nicole",
+          complete: false,
+        })
+      );
 
-  const store = createStore(todos);
+      store.dispatch(
+        addTodoAction({
+          id: 2,
+          name: "Shop at Walmart",
+          complete: false,
+        })
+      );
 
-  store.subscribe(() => {
-    console.log("The new state is: " + store.getState());
-  });
+      store.dispatch(removeTodoAction(1));
 
-  const unsubscribe = store.subscribe(() => {
-    console.log("The store changed");
-  });
-}
+      store.dispatch(toggleTodoAction(0));
 
-function goals(state = [], action) {
-  switch (action.type) {
-    case ADD_GOAL:
-      return state.concat([action.goal]);
+      store.dispatch(
+        addGoalAction({
+          id: 0,
+          name: "Get with Shannon",
+        })
+      );
 
-    case REMOVE_GOAL:
-      return state.filter((goal) => goal.id !== action.id);
+      store.dispatch(
+        addGoalAction({
+          id: 1,
+          name: "Get with Lisa",
+        })
+      );
 
-    default:
-      return state;
-  }
-}
-
-function app(state = {}, action) {
-  return {
-    todos: todos(state.todos, action),
-    goals: goals(state.todos, action),
-  };
-}
-
-const store = createStore(app);
-
-store.subscribe(() => {
-  console.log("The new state is: " + store.getState());
-});
-
-// example dispatch() calls
-
-function addTodoAction(todo) {
-  return {
-    type: ADD_TODO,
-    todo,
-  };
-}
-
-function removeTodoAction(id) {
-  return {
-    type: REMOVE_TODO,
-    id,
-  };
-}
-
-function toggleTodoAction(id) {
-  return {
-    type: TOGGLE_TODO,
-    id,
-  };
-}
-
-function addGoalAction(goal) {
-  return {
-    type: ADD_GOAL,
-    goal,
-  };
-}
-
-function removeGoalAction(id) {
-  return {
-    type: REMOVE_GOAL,
-    id,
-  };
-}
-
-store.dispatch(
-  addTodoAction({
-    id: 0,
-    name: "Learn Redux",
-    complete: false,
-  })
-);
-
-store.dispatch(
-  addTodoAction({
-    id: 1,
-    name: "Dinner w/ Nicole",
-    complete: false,
-  })
-);
-
-store.dispatch(
-  addTodoAction({
-    id: 2,
-    name: "Shop at Walmart",
-    complete: false,
-  })
-);
-
-store.dispatch(removeTodoAction(1));
-
-store.dispatch(toggleTodoAction(0));
-
-store.dispatch(
-  addGoalAction({
-    id: 0,
-    name: "Get with Shannon",
-  })
-);
-
-store.dispatch(
-  addGoalAction({
-    id: 1,
-    name: "Get with Lisa",
-  })
-);
-
-store.dispatch(removeGoalAction(1));
-
+      store.dispatch(removeGoalAction(1));
     </script>
-    
-</body>
+  </body>
 </html>
