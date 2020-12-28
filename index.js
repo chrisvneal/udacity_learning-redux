@@ -74,65 +74,83 @@ store.subscribe(() => {
   console.log("The new state is: " + store.getState());
 });
 
-// example dispatch() call
-store.dispatch({
-  type: "ADD_TODO",
-  todo: {
+// example dispatch() calls
+
+function addTodoAction(todo) {
+  return {
+    type: "ADD_TODO",
+    todo,
+  };
+}
+
+function removeTodoAction(id) {
+  return {
+    type: "REMOVE_TODO",
+    id,
+  };
+}
+
+function toggleTodoAction(id) {
+  return {
+    type: "TOGGLE_TODO",
+    id,
+  };
+}
+
+function addGoalAction(goal) {
+  return {
+    type: "ADD_GOAL",
+    goal,
+  };
+}
+
+function removeGoalAction() {
+  return {
+    type: "REMOVE_GOAL",
+    id,
+  };
+}
+
+store.dispatch(
+  addTodoAction({
     id: 0,
     name: "Learn Redux",
     complete: false,
-  },
-});
+  })
+);
 
-store.dispatch({
-  type: "ADD_TODO",
-  todo: {
+store.dispatch(
+  addTodoAction({
     id: 1,
-    name: "Learn Redux",
+    name: "Dinner w/ Nicole",
     complete: false,
-  },
-});
+  })
+);
 
-store.dispatch({
-  type: "ADD_TODO",
-  todo: {
+store.dispatch(
+  addTodoAction({
     id: 2,
-    name: "Dinner with Nicole",
+    name: "Shop at Walmart",
     complete: false,
-  },
-});
+  })
+);
 
-store.dispatch({
-  type: "REMOVE_TODO",
-  todo: {
-    id: 1,
-    name: "Learn Redux",
-    complete: false,
-  },
-});
+store.dispatch(removeTodoAction(1));
 
-store.dispatch({
-  type: "TOGGLE_TODO",
-  id: 0,
-});
+store.dispatch(toggleTodoAction(0));
 
-store.dispatch({
-  type: "ADD_GOAL",
-  goal: {
+store.dispatch(
+  addGoalAction({
     id: 0,
     name: "Get with Shannon",
-  },
-});
+  })
+);
 
-store.dispatch({
-  type: "ADD_GOAL",
-  goal: {
+store.dispatch(
+  addGoalAction({
     id: 1,
     name: "Get with Lisa",
-  },
-});
+  })
+);
 
-store.dispatch({
-  type: "REMOVE_GOAL",
-  id: 0,
-});
+store.dispatch(removeGoalAction(1));
