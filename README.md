@@ -6,7 +6,7 @@ I hope to build this into a reference I can come back to!
 
 ### _index.js file_
 
-In Lesson 1: Managing State, we learned the fundamentals of Redux and how to build out a Redux **store** where state is created and managed througout the application.
+In Lesson 1: Managing State, we learned the fundamentals of Redux and how to build out a Redux **store** where state is created and managed throughout the application.
 
 ### _index.html file_
 
