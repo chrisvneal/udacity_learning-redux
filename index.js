@@ -61,7 +61,14 @@ function goals(state = [], action) {
   }
 }
 
-const store = createStore(todos);
+function app(state = {}, action) {
+  return {
+    todos: todos(state.todos, action),
+    goals: goals(state.todos, action),
+  };
+}
+
+const store = createStore(app);
 
 store.subscribe(() => {
   console.log("The new state is: " + store.getState());
@@ -84,4 +91,48 @@ store.dispatch({
     name: "Learn Redux",
     complete: false,
   },
+});
+
+store.dispatch({
+  type: "ADD_TODO",
+  todo: {
+    id: 2,
+    name: "Dinner with Nicole",
+    complete: false,
+  },
+});
+
+store.dispatch({
+  type: "REMOVE_TODO",
+  todo: {
+    id: 1,
+    name: "Learn Redux",
+    complete: false,
+  },
+});
+
+store.dispatch({
+  type: "TOGGLE_TODO",
+  id: 0,
+});
+
+store.dispatch({
+  type: "ADD_GOAL",
+  goal: {
+    id: 0,
+    name: "Get with Shannon",
+  },
+});
+
+store.dispatch({
+  type: "ADD_GOAL",
+  goal: {
+    id: 1,
+    name: "Get with Lisa",
+  },
+});
+
+store.dispatch({
+  type: "REMOVE_GOAL",
+  id: 0,
 });
