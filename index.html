@@ -6,26 +6,24 @@
     <title>Udacity Todos Goals</title>
   </head>
   <body>
-    <form action="">
-      <div>
-        <h1>Todo List</h1>
-        <input type="text" placeholder="Add Todo" id="todo" />
-        <button id="todoBtn">Add Task</button>
-        <ul id="todos"></ul>
-      </div>
+    <div>
+      <h1>Todo List</h1>
+      <input type="text" placeholder="Add Todo" id="todo" />
+      <button id="todoBtn">Add Task</button>
+      <ul id="todos"></ul>
+    </div>
 
-      <div>
-        <h1>Add Goal</h1>
-        <input type="text" placeholder="Add Goal" id="goal" />
-        <button id="goalBtn">Add Goal</button>
-        <ul id="goals"></ul>
-      </div>
-    </form>
+    <div>
+      <h1>Add Goal</h1>
+      <input type="text" placeholder="Add Goal" id="goal" />
+      <button id="goalBtn">Add Goal</button>
+      <ul id="goals"></ul>
+    </div>
 
     <script type="text/javascript">
       function generateId() {
         return (
-          Mah.random().toString(36).substring(2) -
+          Math.random().toString(36).substring(2) -
           new Date().getTime().toString(36)
         );
       }
