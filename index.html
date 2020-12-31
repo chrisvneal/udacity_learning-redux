@@ -29,32 +29,6 @@
         );
       }
       // Library Code
-      function createStore(reducer) {
-        // create state variable
-        let state;
-        let listeners = [];
-
-        // access the current state
-        const getState = () => state;
-
-        // subscribe to state updates
-        const subscribe = (listener) => {
-          listeners.push(listener);
-
-          return () => {
-            listeners = listeners.filter((l) => l !== listener);
-          };
-        };
-
-        // update state with  dispatch function
-        const dispatch = (action) => {
-          state = reducer(state, action);
-          listeners.forEach((listener) => listener());
-        };
-
-        // return all user variables
-        return { getState, subscribe, dispatch };
-      }
 
       // App Code
       const ADD_TODO = "ADD_TODO";
@@ -138,7 +112,7 @@
         };
       }
 
-      const store = createStore(app);
+      const store = Redux.createStore(app);
 
       store.subscribe(() => {
         // console.log("The new state is: ", store.getState());
