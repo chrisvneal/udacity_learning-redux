@@ -240,13 +240,34 @@
 
       class Todos extends React.Component {
         render() {
-          return <div>TODOS</div>;
-          <List />;
+          return (
+            <div>
+              TODOS
+              <List />
+            </div>
+          );
         }
       }
+
+      class Goals extends React.Component {
+        render() {
+          return (
+            <div>
+              Goals
+              <List />
+            </div>
+          );
+        }
+      }
+
       class App extends React.component {
         render() {
-          return <div>App</div>;
+          return (
+            <div>
+              <Todos />
+              <Goals />
+            </div>
+          );
         }
       }
 
