@@ -272,7 +272,13 @@
         render() {
           return (
             <div>
-              Goals
+              <h1>Goals</h1>
+              <input
+                type="text"
+                placeholder="Add a goal"
+                ref={(input) => (this.input = input)}
+              />
+              <button onClick={this.addItem}>Add Goal</button>
               <List />
             </div>
           );
