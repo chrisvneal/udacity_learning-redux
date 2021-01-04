@@ -269,6 +269,17 @@
       }
 
       class Goals extends React.Component {
+        addItem = () => {
+          const name = this.input.value;
+          this.input.value = "";
+
+          this.props.store.dispatch(
+            addGoalAction({
+              name,
+              id: generateId(),
+            })
+          );
+        };
         render() {
           return (
             <div>
@@ -290,7 +301,7 @@
           return (
             <div>
               <Todos store={this.props.store} />
-              <Goals />
+              <Goals store={this.props.store} />
             </div>
           );
         }
