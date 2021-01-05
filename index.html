@@ -262,7 +262,7 @@
                 ref={(input) => (this.input = input)}
               />
               <button onClick={this.addItem}>Add Todo</button>
-              <List />
+              <List items={this.props.todos} />
             </div>
           );
         }
@@ -290,7 +290,7 @@
                 ref={(input) => (this.input = input)}
               />
               <button onClick={this.addItem}>Add Goal</button>
-              <List />
+              <List items={this.props.items} />
             </div>
           );
         }
