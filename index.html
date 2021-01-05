@@ -237,7 +237,7 @@
             {props.items.map((item) => (
               <li key={item.id}>
                 <span>{item.name}</span>
-                <button onClick={props.remove(item)}>X</button>
+                <button onClick={() => props.remove(item)}>X</button>
               </li>
             ))}
           </ul>
@@ -291,6 +291,10 @@
             })
           );
         };
+        removeItem = (goal) => {
+          this.props.store.dispatch(removeTodoAction(goal.id));
+        };
+
         render() {
           return (
             <div>
