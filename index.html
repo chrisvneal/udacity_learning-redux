@@ -25,7 +25,7 @@
     </div>
 
     <hr />
-    <div id="app">App</div>
+    <div id="app"></div>
 
     <script type="text/javascript">
       function generateId() {
@@ -291,7 +291,7 @@
                 ref={(input) => (this.input = input)}
               />
               <button onClick={this.addItem}>Add Goal</button>
-              <List items={this.props.items} />
+              <List items={this.props.goals} />
             </div>
           );
         }
