@@ -229,11 +229,16 @@
         document.getElementById("goals").appendChild(node);
       }
     </script>
+
     <script type="text/babel">
       function List(props) {
         return (
           <ul>
-            <li>List</li>
+            {props.items.map((item) => (
+              <li key={item.id}>
+                <span>{item.name}</span>
+              </li>
+            ))}
           </ul>
         );
       }
