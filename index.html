@@ -269,7 +269,8 @@
       }
 
       class Goals extends React.Component {
-        addItem = () => {
+        addItem = (e) => {
+          e.preventDefault();
           const name = this.input.value;
           this.input.value = "";
 
