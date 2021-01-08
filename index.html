@@ -88,6 +88,9 @@
                 : Object.assign({}, todo, { complete: !todo.complete })
             );
 
+          case RECEIVE_DATA:
+            return action.goals;
+
           default:
             return state;
         }
