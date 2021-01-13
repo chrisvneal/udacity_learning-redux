@@ -74,11 +74,13 @@
       }
 
       function handleDeleteTodo(todo) {
-        this.props.store.dispatch(removeTodoAction(todo.id));
+        return (dispatch) => {
+          dispatch(removeTodoAction(todo.id));
 
-        return API.deleteTodo(todo.id).catch(() => {
-          this.props.store.dispatch(addTodoAction(todo));
-        });
+          return API.deleteTodo(todo.id).catch(() => {
+            this.props.store.dispatch(addTodoAction(todo));
+          });
+        };
       }
 
       function todos(state = [], action) {
@@ -161,9 +163,16 @@
         return result;
       };
 
+      const thunk = (store) => (next) => (action) => {
+        if (typeof action === "function") {
+          return action(store.dispatch);
+        }
+        return next(action);
+      };
+
       const store = Redux.createStore(
         Redux.combineReducers({ todos, goals, loading }),
-        Redux.applyMiddleware(checker, logger)
+        Redux.applyMiddleware(thunk, checker, logger)
       );
     </script>
 
