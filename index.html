@@ -73,6 +73,14 @@
         };
       }
 
+      function handleDeleteTodo(todo) {
+        this.props.store.dispatch(removeTodoAction(todo.id));
+
+        return API.deleteTodo(todo.id).catch(() => {
+          this.props.store.dispatch(addTodoAction(todo));
+        });
+      }
+
       function todos(state = [], action) {
         switch (action.type) {
           case ADD_TODO:
@@ -197,10 +205,8 @@
 
         removeItem = (todo) => {
           // make the change in state before network request to nake appear faster. If there's an error, just put it back
-          this.props.store.dispatch(removeTodoAction(todo.id));
-          return API.deleteTodo(todo.id).catch(() => {
-            this.props.store.dispatch(addTodoAction(todo));
-          });
+
+          this.props.store.dispatch(handleDeleteTodo(todo));
         };
 
         toggleItem = (id) => {
