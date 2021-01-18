@@ -84,6 +84,8 @@
         };
       }
 
+      // Async action creators
+
       function handleAddGoal(name, cb) {
         return (dispatch) => {
           return API.saveGoal(name)
@@ -101,9 +103,19 @@
         return (dispatch) => {
           dispatch(removeGoalAction(goal.id));
           return API.deleteGoal(goal.id).catch(() => {
-            this.props.store.dispatch(addGoalAction(goal));
+            dispatch(addGoalAction(goal));
             alert("An error occured. Try again.");
           });
+        };
+      }
+
+      function handleInitialData() {
+        return (dispatch) => {
+          return Promise.all([API.fetchTodos(), API.fetchGoals()]).then(
+            ([todos, goals]) => {
+              store.dispatch(receiveDataAction(todos, goals));
+            }
+          );
         };
       }
 
@@ -303,11 +315,8 @@
         componentDidMount() {
           const { store } = this.props;
 
-          Promise.all([API.fetchTodos(), API.fetchGoals()]).then(
-            ([todos, goals]) => {
-              store.dispatch(receiveDataAction(todos, goals));
-            }
-          );
+          store.dispatch(handleInitialData());
+
           store.subscribe(() => this.forceUpdate());
         }
         render() {
