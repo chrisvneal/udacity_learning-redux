@@ -284,7 +284,7 @@
         }
       }
 
-      const connectedTodos = connect((state) => ({
+      const ConnectedTodos = connect((state) => ({
         todos: state.todos,
       }))(Todos);
 
@@ -316,7 +316,7 @@
         }
       }
 
-      const connectedGoals = connect((state) => ({
+      const ConnectedGoals = connect((state) => ({
         goals: state.goals,
       }))(Goals);
 
@@ -348,7 +348,7 @@
 
       function connect(mapStateToProps) {
         return (Component) => {
-          class Receiever extends React.Component {
+          class Receiver extends React.Component {
             componentDidMount() {
               const { subscribe } = this.props.store;
 
@@ -370,9 +370,9 @@
           class ConnectedComponent extends React.Component {
             render() {
               return (
-                <Contecxt.Consumer>
+                <Context.Consumer>
                   {(store) => <Receiver store={store} />}
-                </Contecxt.Consumer>
+                </Context.Consumer>
               );
             }
           }
