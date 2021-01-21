@@ -79,7 +79,7 @@
           dispatch(removeTodoAction(todo.id));
 
           return API.deleteTodo(todo.id).catch(() => {
-            this.props.store.dispatch(addTodoAction(todo));
+            this.props.dispatch(addTodoAction(todo));
           });
         };
       }
@@ -244,7 +244,7 @@
         addItem = (e) => {
           e.preventDefault();
 
-          this.props.store.dispatch(
+          this.props.dispatch(
             handleAddTodo(this.input.value, () => (this.input.value = ""))
           );
         };
@@ -252,15 +252,15 @@
         removeItem = (todo) => {
           // make the change in state before network request to nake appear faster. If there's an error, just put it back
 
-          this.props.store.dispatch(handleDeleteTodo(todo));
+          this.props.dispatch(handleDeleteTodo(todo));
         };
 
         toggleItem = (id) => {
           // delete from database
 
-          this.props.store.dispatch(toggleTodoAction(id));
+          this.props.dispatch(toggleTodoAction(id));
           return API.saveTodoToggle(id).catch(() => {
-            this.props.store.dispatch(toggleTodoAction(id));
+            this.props.dispatch(toggleTodoAction(id));
             alert("An error occured. Try again");
           });
         };
@@ -284,11 +284,25 @@
         }
       }
 
+      class ConnectedTodos extends React.Component {
+        render() {
+          return (
+            <Context.Consumer>
+              {(store) => {
+                const { todos } = store.getState();
+
+                return <Todos todos={todos} dispatch={store.dispatch} />;
+              }}
+            </Context.Consumer>
+          );
+        }
+      }
+
       class Goals extends React.Component {
         addItem = (e) => {
           e.preventDefault();
 
-          this.props.store.dispatch(
+          this.props.dispatch(
             handleAddGoal(this.input.value, () => (this.input.value = ""))
           );
         };
@@ -336,7 +350,7 @@
         }
         render() {
           const { store } = this.props;
-          const { todos, loading } = store.getState();
+          const { loading } = store.getState();
 
           if (loading === true) {
             return <h3>Loading</h3>;
@@ -344,7 +358,7 @@
 
           return (
             <div>
-              <Todos todos={todos} store={this.props.store} />
+              <ConnectedTodos />
               <ConnectedGoals />
             </div>
           );
