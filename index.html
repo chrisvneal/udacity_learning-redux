@@ -291,13 +291,6 @@
           this.props.store.dispatch(
             handleAddGoal(this.input.value, () => (this.input.value = ""))
           );
-
-          this.props.store.dispatch(
-            addGoalAction({
-              name,
-              id: generateId(),
-            })
-          );
         };
         removeItem = (goal) => {
           this.props.store.dispatch(handleDeleteGoal(goal));
