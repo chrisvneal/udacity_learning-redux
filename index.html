@@ -345,8 +345,6 @@
         loading: state.loading,
       }))(App);
 
-      const Context = React.createContext();
-
       function connect(mapStateToProps) {
         return (Component) => {
           class Receiver extends React.Component {
